@@ -1,13 +1,49 @@
+import { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { NavLink, Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import categoryApi from './api/categoryApi';
 import './App.scss';
+import NotFound from './components/NotFound';
+import AlbumFeature from './featrues/Album';
 import TodoFeature from './featrues/Todo';
 
 function App() {
+  useEffect(() =>{
+    const fetchCategories = async() => {
+      const categoryList = await categoryApi.getAll();
 
+      
+      console.log(categoryList)
+    }
+    fetchCategories();
+  },[])
   return (
     <>
-      <TodoFeature />
+      <p>
+        {' '}
+        <NavLink to="/">Home</NavLink>
+      </p>
+
+      <p>
+        {' '}
+        <NavLink to="/todos">Todos</NavLink>
+      </p>
+
+      <p>
+        <NavLink to="/albums">Albums</NavLink>
+      </p>
+
+      <Switch>
+        <Route path="/" component={TodoFeature} exact />
+        <Route path="/todos" component={TodoFeature} />
+        <Route path="/albums" component={AlbumFeature} />
+
+        <Route component={NotFound} />
+      </Switch>
     </>
-  )
+  );
 }
 
 export default App;
