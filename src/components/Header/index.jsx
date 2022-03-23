@@ -6,6 +6,13 @@ import Typography from '@material-ui/core/Typography';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { TextField } from '@material-ui/core';
+import Register from 'featrues/Auth/components/Register';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +30,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header() {
+export default function Header(disableBackdropClick,disableEscapeKeyDown) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (disableBackdropClick && reason === "backdropClick") {
+      return false;
+    }
+
+    if (disableEscapeKeyDown && reason === "escapeKeyDown") {
+      return false;
+    }
+
+    if (typeof setOpen === "function") {
+      setOpen(false);
+    }
+    
+  };
 
   return (
     <div className={classes.root}>
@@ -46,9 +73,22 @@ export default function Header() {
             <Button color="inherit">Albums</Button>
           </NavLink>
 
-          <Button color="inherit">Register</Button>
+          <Button color="inherit" onClick={handleClickOpen}>Register</Button>
         </Toolbar>
       </AppBar>
+
+      <Dialog disableEscapeKeyDown 
+      // disableBackdropClick='true' 
+      open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogContent>
+          <Register />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
