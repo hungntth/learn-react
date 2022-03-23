@@ -1,3 +1,4 @@
+import Header from 'components/Header';
 import { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -22,19 +23,7 @@ function App() {
   },[])
   return (
     <>
-      <p>
-        {' '}
-        <NavLink to="/">Home</NavLink>
-      </p>
-
-      <p>
-        {' '}
-        <NavLink to="/todos">Todos</NavLink>
-      </p>
-
-      <p>
-        <NavLink to="/albums">Albums</NavLink>
-      </p>
+    <Header />
 
       <Switch>
         <Route path="/" component={CounterFeature} exact />
