@@ -7,6 +7,7 @@ import categoryApi from './api/categoryApi';
 import './App.scss';
 import NotFound from './components/NotFound';
 import AlbumFeature from './featrues/Album';
+import CounterFeature from './featrues/Counter';
 import TodoFeature from './featrues/Todo';
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
       </p>
 
       <Switch>
-        <Route path="/" component={TodoFeature} exact />
+        <Route path="/" component={CounterFeature} exact />
         <Route path="/todos" component={TodoFeature} />
         <Route path="/albums" component={AlbumFeature} />
 
