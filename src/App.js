@@ -10,8 +10,16 @@ import NotFound from './components/NotFound';
 import AlbumFeature from './featrues/Album';
 import CounterFeature from './featrues/Counter';
 import TodoFeature from './featrues/Todo';
+// import { useSnackbar } from 'notistack';
+import { Button } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 
 function App() {
+  const {enqueueSnackbar} = useSnackbar();
+
+  const showNoti = () => {
+    enqueueSnackbar('Succes!',{variant:'success'})
+  }
   useEffect(() =>{
     const fetchCategories = async() => {
       const categoryList = await categoryApi.getAll();
@@ -24,6 +32,7 @@ function App() {
   return (
     <>
     <Header />
+    <Button onClick={showNoti}>Oke</Button>
 
       <Switch>
         <Route path="/" component={CounterFeature} exact />

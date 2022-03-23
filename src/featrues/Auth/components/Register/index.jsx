@@ -4,7 +4,6 @@ import RegisterForm from '../RegisterForm';
 import { useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { register } from 'featrues/Auth/userSlice';
-import { useSnackbar } from 'notistack';
 
 Register.propTypes = {
     
@@ -12,7 +11,7 @@ Register.propTypes = {
 
 function Register(props) {
     const dispatch = useDispatch();
-    const {enqueueSnackbar} = useSnackbar;
+
     const handleSubmit = async (values) => {
 
        try {
@@ -22,7 +21,7 @@ function Register(props) {
         const resulAction = await dispatch(action);
         const user = unwrapResult(resulAction);
         console.log('New user', user);
-        enqueueSnackbar('Register successfully', {variant: 'success' });
+       
        } catch (error) {
         console.log('Failed to register:', error)
            
