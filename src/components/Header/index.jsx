@@ -78,6 +78,7 @@ export default function Header(disableBackdropClick, disableEscapeKeyDown) {
   const handleLogoutClick = () => {
     const action = logout();
     dispatch(action);
+    setAnchorEl(null);
   }
 
   return (
