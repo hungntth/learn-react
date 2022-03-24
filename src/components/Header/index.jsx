@@ -11,8 +11,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { TextField } from '@material-ui/core';
+import { IconButton, TextField } from '@material-ui/core';
 import Register from 'featrues/Auth/components/Register';
+import { Close } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,13 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     textDecoration: 'none',
   },
+  closeButton: {
+    position:'absolute',
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+    color: theme.palette.grey[500],
+    zIndex: 1,
+  }
 }));
 
 export default function Header(disableBackdropClick,disableEscapeKeyDown) {
@@ -80,14 +88,13 @@ export default function Header(disableBackdropClick,disableEscapeKeyDown) {
       <Dialog disableEscapeKeyDown 
       // disableBackdropClick='true' 
       open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+
+        <IconButton onClick={handleClose} className={classes.closeButton}>
+          <Close />
+        </IconButton>
         <DialogContent>
-          <Register />
+          <Register closeDialog={handleClose}/>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

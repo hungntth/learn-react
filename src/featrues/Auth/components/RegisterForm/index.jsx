@@ -73,7 +73,6 @@ function RegisterForm(props) {
     if (onSubmit) {
       await onSubmit(values);
     }
-    form.reset();
   };
 
 
