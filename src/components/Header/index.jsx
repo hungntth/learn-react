@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton } from '@material-ui/core';
+import { Avatar, Box, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,6 +10,7 @@ import { AccountCircle, Close } from '@material-ui/icons';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import Login from 'featrues/Auth/components/Login';
 import Register from 'featrues/Auth/components/Register';
+import { logout } from 'featrues/Auth/userSlice';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
@@ -43,11 +44,12 @@ const MODE = {
 
 export default function Header(disableBackdropClick, disableEscapeKeyDown) {
   const dispatch = useDispatch();
-  const loggedInUser = useSelector(state => state.user.current);
-  const isLoggedIn =!!loggedInUser.id;
+  const loggedInUser = useSelector((state) => state.user.current);
+  const isLoggedIn = !!loggedInUser.id;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -66,6 +68,17 @@ export default function Header(disableBackdropClick, disableEscapeKeyDown) {
       setOpen(false);
     }
   };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+  const handleUserMenu = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleLogoutClick = () => {
+    const action = logout();
+    dispatch(action);
+  }
 
   return (
     <div className={classes.root}>
@@ -86,20 +99,37 @@ export default function Header(disableBackdropClick, disableEscapeKeyDown) {
           <NavLink to="/albums" className={classes.link}>
             <Button color="inherit">Albums</Button>
           </NavLink>
-          {!isLoggedIn &&(
+          {!isLoggedIn && (
             <Button color="inherit" onClick={handleClickOpen}>
-            Login
-          </Button>
+              Login
+            </Button>
           )}
 
-          {isLoggedIn &&(
-            <IconButton color="inherit">
+          {isLoggedIn && (
+            <IconButton onClick={handleUserMenu} color="inherit">
               <AccountCircle />
             </IconButton>
           )}
-          
         </Toolbar>
       </AppBar>
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        getContentAnchorEl={null}
+      >
+        <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+        <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+      </Menu>
 
       <Dialog
         disableEscapeKeyDown
