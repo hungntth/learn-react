@@ -42,7 +42,7 @@ function ListPage(props) {
     return {
       ...params,
       _page: Number.parseInt(params._page) || 1,
-      _limit: Number.parseInt(params._limit) || 9,
+      _limit: Number.parseInt(params._limit) || 12,
       _sort: params._sort || 'salePrice:ASC',
       isPromotion: params.isPromotion === 'true',
       isFreeShip: params.isFreeShip === 'true',
@@ -52,7 +52,7 @@ function ListPage(props) {
   const [productList, setProductList] = useState([]);
   const [pagination, setPagination] = useState({
     limit: 12,
-    total: 10,
+    total: 7,
     page: 1,
   });
   const [loading, setLoading] = useState(true);
@@ -129,7 +129,7 @@ function ListPage(props) {
               <ProductSort currentSort={queryParams._sort} onChange={handleSortChange} />
               <FilterViewer filters={queryParams} onChange={setNewFilters} />
 
-              {loading ? <ProductSkeletonList length={9} /> : <ProductList data={productList} />}
+              {loading ? <ProductSkeletonList length={12} /> : <ProductList data={productList} />}
 
               <Box className={classes.pagination}>
                 <Pagination

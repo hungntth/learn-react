@@ -4,9 +4,9 @@ import { LockOutlined } from '@material-ui/icons';
 import InputField from 'components/forn-controls/InputField';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import PasswordField from 'components/forn-controls/PasswordField';
+import { useForm } from 'react-hook-form';
 
 const schema = yup.object().shape({
     fullName: yup
