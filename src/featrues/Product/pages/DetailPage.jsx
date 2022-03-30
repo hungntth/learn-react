@@ -1,5 +1,7 @@
 import { Box, Container, Grid, LinearProgress, makeStyles, Paper } from '@material-ui/core';
+import { addToCart } from 'featrues/Cart/cartSlice';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
 import AddToCardForm from '../components/AddToCardForm';
@@ -25,12 +27,12 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 0',
     padding: theme.spacing(1.5),
   },
-  loading:{
+  loading: {
     position: 'fixed',
     top: 0,
-    left:0,
-    width: '100%'
-  }
+    left: 0,
+    width: '100%',
+  },
 }));
 
 function DetailPage() {
@@ -41,17 +43,27 @@ function DetailPage() {
   } = useRouteMatch();
 
   const { product, loading } = useProductDetail(productId);
+  const dispatch = useDispatch();
   if (loading) {
-      return (
-        <Box className={classes.loading}>
-          <LinearProgress />
-        </Box>
-      )
+    return (
+      <Box className={classes.loading}>
+        <LinearProgress />
+      </Box>
+    );
   }
 
-  const handleAddToCartSubmit = (formValues) => {
-        console.log(formValues)
-  }
+  const handleAddToCartSubmit = ({quantity}) => {
+   
+    const action = addToCart(
+     {
+      id: product.id,
+      product,
+     quantity,
+     }
+    );
+    console.log(action);
+    dispatch(action);
+  };
 
   return (
     <Box className={classes.root}>
@@ -62,8 +74,8 @@ function DetailPage() {
               <ProductThumbnail product={product} />
             </Grid>
             <Grid item className={classes.right}>
-              <ProductInfo product={product}/>
-              <AddToCardForm onSubmit={handleAddToCartSubmit}/>
+              <ProductInfo product={product} />
+              <AddToCardForm onSubmit={handleAddToCartSubmit} />
             </Grid>
           </Grid>
         </Paper>
